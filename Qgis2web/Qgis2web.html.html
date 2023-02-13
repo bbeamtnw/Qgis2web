@@ -1,0 +1,1410 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css">
+        <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <link rel="stylesheet" href="css/MarkerCluster.css">
+        <link rel="stylesheet" href="css/MarkerCluster.Default.css">
+        <link rel="stylesheet" href="css/filter.css">
+<link rel="stylesheet" href="css/nouislider.min.css">
+        <link rel="stylesheet" href="css/leaflet-control-geocoder.Geocoder.css">
+        <style>
+        #map {
+            width: 1335px;
+            height: 817px;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="js/leaflet-control-geocoder.Geocoder.js"></script>
+        <script src="js/leaflet.markercluster.js"></script>
+        <script src="js/tailDT.js"></script>
+<script src="js/nouislider.min.js"></script>
+<script src="js/wNumb.js"></script>
+        <script src="data/amphoe_2.js"></script>
+        <script src="data/transportation_3.js"></script>
+        <script src="data/stream_4.js"></script>
+        <script src="data/village_5.js"></script>
+        <script>
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:28, minZoom:1
+        }).fitBounds([[16.28956359840743,99.31972585118011],[17.69404283118494,101.61686795828739]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+        }
+        map.createPane('pane_GoogleSatellite_0');
+        map.getPane('pane_GoogleSatellite_0').style.zIndex = 400;
+        var layer_GoogleSatellite_0 = L.tileLayer('https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
+            pane: 'pane_GoogleSatellite_0',
+            opacity: 1.0,
+            attribution: '',
+            minZoom: 1,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 19
+        });
+        layer_GoogleSatellite_0;
+        map.addLayer(layer_GoogleSatellite_0);
+        map.createPane('pane_OSMStandard_1');
+        map.getPane('pane_OSMStandard_1').style.zIndex = 401;
+        var layer_OSMStandard_1 = L.tileLayer('http://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            pane: 'pane_OSMStandard_1',
+            opacity: 1.0,
+            attribution: '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap contributors, CC-BY-SA</a>',
+            minZoom: 1,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 19
+        });
+        layer_OSMStandard_1;
+        map.addLayer(layer_OSMStandard_1);
+        function pop_amphoe_2(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['AREA'] !== null ? autolinker.link(feature.properties['AREA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['AMP_CODE'] !== null ? autolinker.link(feature.properties['AMP_CODE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['AMP_NAM_T'] !== null ? autolinker.link(feature.properties['AMP_NAM_T'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['AMP_NAM_E'] !== null ? autolinker.link(feature.properties['AMP_NAM_E'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['PROV_CODE'] !== null ? autolinker.link(feature.properties['PROV_CODE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['strata'] !== null ? autolinker.link(feature.properties['strata'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_amphoe_2_0() {
+            return {
+                pane: 'pane_amphoe_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(190,178,151,0.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_amphoe_2');
+        map.getPane('pane_amphoe_2').style.zIndex = 402;
+        map.getPane('pane_amphoe_2').style['mix-blend-mode'] = 'normal';
+        var layer_amphoe_2 = new L.geoJson(json_amphoe_2, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_amphoe_2',
+            layerName: 'layer_amphoe_2',
+            pane: 'pane_amphoe_2',
+            onEachFeature: pop_amphoe_2,
+            style: style_amphoe_2_0,
+        });
+        bounds_group.addLayer(layer_amphoe_2);
+        map.addLayer(layer_amphoe_2);
+        function pop_transportation_3(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['LENGTH'] !== null ? autolinker.link(feature.properties['LENGTH'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['TRANS_TYP'] !== null ? autolinker.link(feature.properties['TRANS_TYP'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['TYP_T'] !== null ? autolinker.link(feature.properties['TYP_T'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NAME_T'] !== null ? autolinker.link(feature.properties['NAME_T'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NAME_E'] !== null ? autolinker.link(feature.properties['NAME_E'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['TranNo'] !== null ? autolinker.link(feature.properties['TranNo'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['TranTyp_n'] !== null ? autolinker.link(feature.properties['TranTyp_n'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_transportation_3_0() {
+            return {
+                pane: 'pane_transportation_3',
+                opacity: 1,
+                color: 'rgba(190,207,80,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+        }
+        map.createPane('pane_transportation_3');
+        map.getPane('pane_transportation_3').style.zIndex = 403;
+        map.getPane('pane_transportation_3').style['mix-blend-mode'] = 'normal';
+        var layer_transportation_3 = new L.geoJson(json_transportation_3, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_transportation_3',
+            layerName: 'layer_transportation_3',
+            pane: 'pane_transportation_3',
+            onEachFeature: pop_transportation_3,
+            style: style_transportation_3_0,
+        });
+        bounds_group.addLayer(layer_transportation_3);
+        map.addLayer(layer_transportation_3);
+        function pop_stream_4(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['LENGTH'] !== null ? autolinker.link(feature.properties['LENGTH'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['STR_ID'] !== null ? autolinker.link(feature.properties['STR_ID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['STR_NAM_T'] !== null ? autolinker.link(feature.properties['STR_NAM_T'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['STR_NAM_E'] !== null ? autolinker.link(feature.properties['STR_NAM_E'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['LOCAL_NAM'] !== null ? autolinker.link(feature.properties['LOCAL_NAM'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['STR_TYPE'] !== null ? autolinker.link(feature.properties['STR_TYPE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_stream_4_0() {
+            return {
+                pane: 'pane_stream_4',
+                opacity: 1,
+                color: 'rgba(231,113,72,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+        }
+        map.createPane('pane_stream_4');
+        map.getPane('pane_stream_4').style.zIndex = 404;
+        map.getPane('pane_stream_4').style['mix-blend-mode'] = 'normal';
+        var layer_stream_4 = new L.geoJson(json_stream_4, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_stream_4',
+            layerName: 'layer_stream_4',
+            pane: 'pane_stream_4',
+            onEachFeature: pop_stream_4,
+            style: style_stream_4_0,
+        });
+        bounds_group.addLayer(layer_stream_4);
+        map.addLayer(layer_stream_4);
+        function pop_village_5(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NRD_CODE'] !== null ? autolinker.link(feature.properties['NRD_CODE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['VILL_CODE'] !== null ? autolinker.link(feature.properties['VILL_CODE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['VILL_NAM_T'] !== null ? autolinker.link(feature.properties['VILL_NAM_T'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['PROV_CODE'] !== null ? autolinker.link(feature.properties['PROV_CODE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['AMP_CODE'] !== null ? autolinker.link(feature.properties['AMP_CODE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['TAM_CODE'] !== null ? autolinker.link(feature.properties['TAM_CODE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_village_5_0() {
+            return {
+                pane: 'pane_village_5',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(225,89,137,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_village_5');
+        map.getPane('pane_village_5').style.zIndex = 405;
+        map.getPane('pane_village_5').style['mix-blend-mode'] = 'normal';
+        var layer_village_5 = new L.geoJson(json_village_5, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_village_5',
+            layerName: 'layer_village_5',
+            pane: 'pane_village_5',
+            onEachFeature: pop_village_5,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_village_5_0(feature));
+            },
+        });
+        var cluster_village_5 = new L.MarkerClusterGroup({showCoverageOnHover: false,
+            spiderfyDistanceMultiplier: 2});
+        cluster_village_5.addLayer(layer_village_5);
+
+        bounds_group.addLayer(layer_village_5);
+        cluster_village_5.addTo(map);
+        var osmGeocoder = new L.Control.Geocoder({
+            collapsed: true,
+            position: 'topleft',
+            text: 'Search',
+            title: 'Testing'
+        }).addTo(map);
+        document.getElementsByClassName('leaflet-control-geocoder-icon')[0]
+        .className += ' fa fa-search';
+        document.getElementsByClassName('leaflet-control-geocoder-icon')[0]
+        .title += 'Search for a place';
+        var baseMaps = {};
+        L.control.layers(baseMaps,{'<img src="legend/village_5.png" /> village': cluster_village_5,'<img src="legend/stream_4.png" /> stream': layer_stream_4,'<img src="legend/transportation_3.png" /> transportation': layer_transportation_3,'<img src="legend/amphoe_2.png" /> amphoe': layer_amphoe_2,"OSM Standard": layer_OSMStandard_1,"Google Satellite": layer_GoogleSatellite_0,},{collapsed:false}).addTo(map);
+        setBounds();
+        var i = 0;
+        layer_amphoe_2.eachLayer(function(layer) {
+            var context = {
+                feature: layer.feature,
+                variables: {}
+            };
+            layer.bindTooltip((layer.feature.properties['AMP_NAM_T'] !== null?String('<div style="color: #000000; font-size: 10pt; font-family: \'MS Shell Dlg 2\', sans-serif;">' + layer.feature.properties['AMP_NAM_T']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_amphoe_2'});
+            labels.push(layer);
+            totalMarkers += 1;
+              layer.added = true;
+              addLabel(layer, i);
+              i++;
+        });
+        var mapDiv = document.getElementById('map');
+        var row = document.createElement('div');
+        row.className="row";
+        row.id="all";
+        row.style.height = "100%";
+        var col1 = document.createElement('div');
+        col1.className="col9";
+        col1.id = "mapWindow";
+        col1.style.height = "99%";
+        col1.style.width = "80%";
+        col1.style.display = "inline-block";
+        var col2 = document.createElement('div');
+        col2.className="col3";
+        col2.id = "menu";
+        col2.style.display = "inline-block";
+        mapDiv.parentNode.insertBefore(row, mapDiv);
+        document.getElementById("all").appendChild(col1);
+        document.getElementById("all").appendChild(col2);
+        col1.appendChild(mapDiv)
+        var Filters = {"VILL_CODE": "str"};
+        function filterFunc() {
+          map.eachLayer(function(lyr){
+          if ("options" in lyr && "dataVar" in lyr["options"]){
+            features = this[lyr["options"]["dataVar"]].features.slice(0);
+            try{
+              for (key in Filters){
+                keyS = key.replace(/[^a-zA-Z0-9_]/g, "")
+                if (Filters[key] == "str" || Filters[key] == "bool"){
+                  var selection = [];
+                  var options = document.getElementById("sel_" + keyS).options
+                  for (var i=0; i < options.length; i++) {
+                    if (options[i].selected) selection.push(options[i].value);
+                  }
+                    try{
+                      if (key in features[0].properties){
+                        for (i = features.length - 1;
+                          i >= 0; --i){
+                          if (selection.indexOf(
+                          features[i].properties[key])<0
+                          && selection.length>0) {
+                          features.splice(i,1);
+                          }
+                        }
+                      }
+                    } catch(err){
+                  }
+                }
+                if (Filters[key] == "int"){
+                  sliderVals =  document.getElementById(
+                    "div_" + keyS).noUiSlider.get();
+                  try{
+                    if (key in features[0].properties){
+                    for (i = features.length - 1; i >= 0; --i){
+                      if (parseInt(features[i].properties[key])
+                          < sliderVals[0]
+                          || parseInt(features[i].properties[key])
+                          > sliderVals[1]){
+                            features.splice(i,1);
+                          }
+                        }
+                      }
+                    } catch(err){
+                    }
+                  }
+                if (Filters[key] == "real"){
+                  sliderVals =  document.getElementById(
+                    "div_" + keyS).noUiSlider.get();
+                  try{
+                    if (key in features[0].properties){
+                    for (i = features.length - 1; i >= 0; --i){
+                      if (features[i].properties[key]
+                          < sliderVals[0]
+                          || features[i].properties[key]
+                          > sliderVals[1]){
+                            features.splice(i,1);
+                          }
+                        }
+                      }
+                    } catch(err){
+                    }
+                  }
+                if (Filters[key] == "date"
+                  || Filters[key] == "datetime"
+                  || Filters[key] == "time"){
+                  try{
+                    if (key in features[0].properties){
+                      HTMLkey = key.replace(/[&\/\\#,+()$~%.'":*?<>{} ]/g, '');
+                      startdate = document.getElementById("dat_" +
+                        HTMLkey + "_date1").value.replace(" ", "T");
+                      enddate = document.getElementById("dat_" +
+                        HTMLkey + "_date2").value.replace(" ", "T");
+                      for (i = features.length - 1; i >= 0; --i){
+                        if (features[i].properties[key] < startdate
+                          || features[i].properties[key] > enddate){
+                          features.splice(i,1);
+                        }
+                      }
+                    }
+                  } catch(err){
+                  }
+                }
+              }
+            } catch(err){
+            }
+          this[lyr["options"]["layerName"]].clearLayers();
+          this[lyr["options"]["layerName"]].addData(features);
+        var i = 0;
+        layer_amphoe_2.eachLayer(function(layer) {
+            var context = {
+                feature: layer.feature,
+                variables: {}
+            };
+            layer.bindTooltip((layer.feature.properties['AMP_NAM_T'] !== null?String('<div style="color: #000000; font-size: 10pt; font-family: \'MS Shell Dlg 2\', sans-serif;">' + layer.feature.properties['AMP_NAM_T']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_amphoe_2'});
+            labels.push(layer);
+            totalMarkers += 1;
+              layer.added = true;
+              addLabel(layer, i);
+              i++;
+        });
+          }
+          })
+        }
+            document.getElementById("menu").appendChild(
+                document.createElement("div"));
+            var div_VILL_CODE = document.createElement('div');
+            div_VILL_CODE.id = "div_VILL_CODE";
+            div_VILL_CODE.className= "filterselect";
+            document.getElementById("menu").appendChild(div_VILL_CODE);
+            sel_VILL_CODE = document.createElement('select');
+            sel_VILL_CODE.multiple = true;
+            sel_VILL_CODE.size = 10;
+            sel_VILL_CODE.id = "sel_VILL_CODE";
+            var VILL_CODE_options_str = "<option value='' unselected></option>";
+            sel_VILL_CODE.onchange = function(){filterFunc()};
+            VILL_CODE_options_str  += '<option value="65010201">65010201</option>';
+            VILL_CODE_options_str  += '<option value="65010202">65010202</option>';
+            VILL_CODE_options_str  += '<option value="65010203">65010203</option>';
+            VILL_CODE_options_str  += '<option value="65010204">65010204</option>';
+            VILL_CODE_options_str  += '<option value="65010205">65010205</option>';
+            VILL_CODE_options_str  += '<option value="65010206">65010206</option>';
+            VILL_CODE_options_str  += '<option value="65010207">65010207</option>';
+            VILL_CODE_options_str  += '<option value="65010208">65010208</option>';
+            VILL_CODE_options_str  += '<option value="65010304">65010304</option>';
+            VILL_CODE_options_str  += '<option value="65010307">65010307</option>';
+            VILL_CODE_options_str  += '<option value="65010308">65010308</option>';
+            VILL_CODE_options_str  += '<option value="65010309">65010309</option>';
+            VILL_CODE_options_str  += '<option value="65010310">65010310</option>';
+            VILL_CODE_options_str  += '<option value="65010401">65010401</option>';
+            VILL_CODE_options_str  += '<option value="65010402">65010402</option>';
+            VILL_CODE_options_str  += '<option value="65010403">65010403</option>';
+            VILL_CODE_options_str  += '<option value="65010404">65010404</option>';
+            VILL_CODE_options_str  += '<option value="65010405">65010405</option>';
+            VILL_CODE_options_str  += '<option value="65010406">65010406</option>';
+            VILL_CODE_options_str  += '<option value="65010407">65010407</option>';
+            VILL_CODE_options_str  += '<option value="65010408">65010408</option>';
+            VILL_CODE_options_str  += '<option value="65010409">65010409</option>';
+            VILL_CODE_options_str  += '<option value="65010410">65010410</option>';
+            VILL_CODE_options_str  += '<option value="65010411">65010411</option>';
+            VILL_CODE_options_str  += '<option value="65010501">65010501</option>';
+            VILL_CODE_options_str  += '<option value="65010502">65010502</option>';
+            VILL_CODE_options_str  += '<option value="65010503">65010503</option>';
+            VILL_CODE_options_str  += '<option value="65010504">65010504</option>';
+            VILL_CODE_options_str  += '<option value="65010505">65010505</option>';
+            VILL_CODE_options_str  += '<option value="65010506">65010506</option>';
+            VILL_CODE_options_str  += '<option value="65010507">65010507</option>';
+            VILL_CODE_options_str  += '<option value="65010508">65010508</option>';
+            VILL_CODE_options_str  += '<option value="65010509">65010509</option>';
+            VILL_CODE_options_str  += '<option value="65010510">65010510</option>';
+            VILL_CODE_options_str  += '<option value="65010601">65010601</option>';
+            VILL_CODE_options_str  += '<option value="65010602">65010602</option>';
+            VILL_CODE_options_str  += '<option value="65010603">65010603</option>';
+            VILL_CODE_options_str  += '<option value="65010604">65010604</option>';
+            VILL_CODE_options_str  += '<option value="65010605">65010605</option>';
+            VILL_CODE_options_str  += '<option value="65010606">65010606</option>';
+            VILL_CODE_options_str  += '<option value="65010607">65010607</option>';
+            VILL_CODE_options_str  += '<option value="65010608">65010608</option>';
+            VILL_CODE_options_str  += '<option value="65010609">65010609</option>';
+            VILL_CODE_options_str  += '<option value="65010701">65010701</option>';
+            VILL_CODE_options_str  += '<option value="65010702">65010702</option>';
+            VILL_CODE_options_str  += '<option value="65010703">65010703</option>';
+            VILL_CODE_options_str  += '<option value="65010704">65010704</option>';
+            VILL_CODE_options_str  += '<option value="65010705">65010705</option>';
+            VILL_CODE_options_str  += '<option value="65010801">65010801</option>';
+            VILL_CODE_options_str  += '<option value="65010802">65010802</option>';
+            VILL_CODE_options_str  += '<option value="65010803">65010803</option>';
+            VILL_CODE_options_str  += '<option value="65010804">65010804</option>';
+            VILL_CODE_options_str  += '<option value="65010805">65010805</option>';
+            VILL_CODE_options_str  += '<option value="65010806">65010806</option>';
+            VILL_CODE_options_str  += '<option value="65010807">65010807</option>';
+            VILL_CODE_options_str  += '<option value="65010808">65010808</option>';
+            VILL_CODE_options_str  += '<option value="65010809">65010809</option>';
+            VILL_CODE_options_str  += '<option value="65010810">65010810</option>';
+            VILL_CODE_options_str  += '<option value="65010811">65010811</option>';
+            VILL_CODE_options_str  += '<option value="65010812">65010812</option>';
+            VILL_CODE_options_str  += '<option value="65010813">65010813</option>';
+            VILL_CODE_options_str  += '<option value="65010901">65010901</option>';
+            VILL_CODE_options_str  += '<option value="65010902">65010902</option>';
+            VILL_CODE_options_str  += '<option value="65010903">65010903</option>';
+            VILL_CODE_options_str  += '<option value="65010904">65010904</option>';
+            VILL_CODE_options_str  += '<option value="65010905">65010905</option>';
+            VILL_CODE_options_str  += '<option value="65010906">65010906</option>';
+            VILL_CODE_options_str  += '<option value="65010907">65010907</option>';
+            VILL_CODE_options_str  += '<option value="65010908">65010908</option>';
+            VILL_CODE_options_str  += '<option value="65010909">65010909</option>';
+            VILL_CODE_options_str  += '<option value="65010910">65010910</option>';
+            VILL_CODE_options_str  += '<option value="65011001">65011001</option>';
+            VILL_CODE_options_str  += '<option value="65011002">65011002</option>';
+            VILL_CODE_options_str  += '<option value="65011003">65011003</option>';
+            VILL_CODE_options_str  += '<option value="65011004">65011004</option>';
+            VILL_CODE_options_str  += '<option value="65011005">65011005</option>';
+            VILL_CODE_options_str  += '<option value="65011006">65011006</option>';
+            VILL_CODE_options_str  += '<option value="65011007">65011007</option>';
+            VILL_CODE_options_str  += '<option value="65011101">65011101</option>';
+            VILL_CODE_options_str  += '<option value="65011102">65011102</option>';
+            VILL_CODE_options_str  += '<option value="65011103">65011103</option>';
+            VILL_CODE_options_str  += '<option value="65011104">65011104</option>';
+            VILL_CODE_options_str  += '<option value="65011105">65011105</option>';
+            VILL_CODE_options_str  += '<option value="65011106">65011106</option>';
+            VILL_CODE_options_str  += '<option value="65011107">65011107</option>';
+            VILL_CODE_options_str  += '<option value="65011108">65011108</option>';
+            VILL_CODE_options_str  += '<option value="65011109">65011109</option>';
+            VILL_CODE_options_str  += '<option value="65011201">65011201</option>';
+            VILL_CODE_options_str  += '<option value="65011202">65011202</option>';
+            VILL_CODE_options_str  += '<option value="65011203">65011203</option>';
+            VILL_CODE_options_str  += '<option value="65011204">65011204</option>';
+            VILL_CODE_options_str  += '<option value="65011205">65011205</option>';
+            VILL_CODE_options_str  += '<option value="65011206">65011206</option>';
+            VILL_CODE_options_str  += '<option value="65011207">65011207</option>';
+            VILL_CODE_options_str  += '<option value="65011208">65011208</option>';
+            VILL_CODE_options_str  += '<option value="65011301">65011301</option>';
+            VILL_CODE_options_str  += '<option value="65011302">65011302</option>';
+            VILL_CODE_options_str  += '<option value="65011303">65011303</option>';
+            VILL_CODE_options_str  += '<option value="65011304">65011304</option>';
+            VILL_CODE_options_str  += '<option value="65011305">65011305</option>';
+            VILL_CODE_options_str  += '<option value="65011306">65011306</option>';
+            VILL_CODE_options_str  += '<option value="65011307">65011307</option>';
+            VILL_CODE_options_str  += '<option value="65011308">65011308</option>';
+            VILL_CODE_options_str  += '<option value="65011309">65011309</option>';
+            VILL_CODE_options_str  += '<option value="65011310">65011310</option>';
+            VILL_CODE_options_str  += '<option value="65011311">65011311</option>';
+            VILL_CODE_options_str  += '<option value="65011401">65011401</option>';
+            VILL_CODE_options_str  += '<option value="65011402">65011402</option>';
+            VILL_CODE_options_str  += '<option value="65011403">65011403</option>';
+            VILL_CODE_options_str  += '<option value="65011404">65011404</option>';
+            VILL_CODE_options_str  += '<option value="65011405">65011405</option>';
+            VILL_CODE_options_str  += '<option value="65011501">65011501</option>';
+            VILL_CODE_options_str  += '<option value="65011502">65011502</option>';
+            VILL_CODE_options_str  += '<option value="65011503">65011503</option>';
+            VILL_CODE_options_str  += '<option value="65011504">65011504</option>';
+            VILL_CODE_options_str  += '<option value="65011505">65011505</option>';
+            VILL_CODE_options_str  += '<option value="65011601">65011601</option>';
+            VILL_CODE_options_str  += '<option value="65011602">65011602</option>';
+            VILL_CODE_options_str  += '<option value="65011603">65011603</option>';
+            VILL_CODE_options_str  += '<option value="65011604">65011604</option>';
+            VILL_CODE_options_str  += '<option value="65011605">65011605</option>';
+            VILL_CODE_options_str  += '<option value="65011606">65011606</option>';
+            VILL_CODE_options_str  += '<option value="65011607">65011607</option>';
+            VILL_CODE_options_str  += '<option value="65011608">65011608</option>';
+            VILL_CODE_options_str  += '<option value="65011609">65011609</option>';
+            VILL_CODE_options_str  += '<option value="65011702">65011702</option>';
+            VILL_CODE_options_str  += '<option value="65011703">65011703</option>';
+            VILL_CODE_options_str  += '<option value="65011705">65011705</option>';
+            VILL_CODE_options_str  += '<option value="65011706">65011706</option>';
+            VILL_CODE_options_str  += '<option value="65011707">65011707</option>';
+            VILL_CODE_options_str  += '<option value="65011801">65011801</option>';
+            VILL_CODE_options_str  += '<option value="65011802">65011802</option>';
+            VILL_CODE_options_str  += '<option value="65011803">65011803</option>';
+            VILL_CODE_options_str  += '<option value="65011804">65011804</option>';
+            VILL_CODE_options_str  += '<option value="65011805">65011805</option>';
+            VILL_CODE_options_str  += '<option value="65011806">65011806</option>';
+            VILL_CODE_options_str  += '<option value="65011807">65011807</option>';
+            VILL_CODE_options_str  += '<option value="65011808">65011808</option>';
+            VILL_CODE_options_str  += '<option value="65011901">65011901</option>';
+            VILL_CODE_options_str  += '<option value="65011902">65011902</option>';
+            VILL_CODE_options_str  += '<option value="65011903">65011903</option>';
+            VILL_CODE_options_str  += '<option value="65011904">65011904</option>';
+            VILL_CODE_options_str  += '<option value="65011905">65011905</option>';
+            VILL_CODE_options_str  += '<option value="65012001">65012001</option>';
+            VILL_CODE_options_str  += '<option value="65012002">65012002</option>';
+            VILL_CODE_options_str  += '<option value="65012003">65012003</option>';
+            VILL_CODE_options_str  += '<option value="65012004">65012004</option>';
+            VILL_CODE_options_str  += '<option value="65012005">65012005</option>';
+            VILL_CODE_options_str  += '<option value="65020101">65020101</option>';
+            VILL_CODE_options_str  += '<option value="65020102">65020102</option>';
+            VILL_CODE_options_str  += '<option value="65020103">65020103</option>';
+            VILL_CODE_options_str  += '<option value="65020104">65020104</option>';
+            VILL_CODE_options_str  += '<option value="65020105">65020105</option>';
+            VILL_CODE_options_str  += '<option value="65020106">65020106</option>';
+            VILL_CODE_options_str  += '<option value="65020107">65020107</option>';
+            VILL_CODE_options_str  += '<option value="65020108">65020108</option>';
+            VILL_CODE_options_str  += '<option value="65020109">65020109</option>';
+            VILL_CODE_options_str  += '<option value="65020110">65020110</option>';
+            VILL_CODE_options_str  += '<option value="65020111">65020111</option>';
+            VILL_CODE_options_str  += '<option value="65020112">65020112</option>';
+            VILL_CODE_options_str  += '<option value="65020113">65020113</option>';
+            VILL_CODE_options_str  += '<option value="65020201">65020201</option>';
+            VILL_CODE_options_str  += '<option value="65020202">65020202</option>';
+            VILL_CODE_options_str  += '<option value="65020203">65020203</option>';
+            VILL_CODE_options_str  += '<option value="65020204">65020204</option>';
+            VILL_CODE_options_str  += '<option value="65020205">65020205</option>';
+            VILL_CODE_options_str  += '<option value="65020206">65020206</option>';
+            VILL_CODE_options_str  += '<option value="65020207">65020207</option>';
+            VILL_CODE_options_str  += '<option value="65020208">65020208</option>';
+            VILL_CODE_options_str  += '<option value="65020209">65020209</option>';
+            VILL_CODE_options_str  += '<option value="65020210">65020210</option>';
+            VILL_CODE_options_str  += '<option value="65020211">65020211</option>';
+            VILL_CODE_options_str  += '<option value="65020212">65020212</option>';
+            VILL_CODE_options_str  += '<option value="65020213">65020213</option>';
+            VILL_CODE_options_str  += '<option value="65020214">65020214</option>';
+            VILL_CODE_options_str  += '<option value="65020215">65020215</option>';
+            VILL_CODE_options_str  += '<option value="65020216">65020216</option>';
+            VILL_CODE_options_str  += '<option value="65020217">65020217</option>';
+            VILL_CODE_options_str  += '<option value="65020218">65020218</option>';
+            VILL_CODE_options_str  += '<option value="65020219">65020219</option>';
+            VILL_CODE_options_str  += '<option value="65020220">65020220</option>';
+            VILL_CODE_options_str  += '<option value="65020221">65020221</option>';
+            VILL_CODE_options_str  += '<option value="65020301">65020301</option>';
+            VILL_CODE_options_str  += '<option value="65020302">65020302</option>';
+            VILL_CODE_options_str  += '<option value="65020303">65020303</option>';
+            VILL_CODE_options_str  += '<option value="65020304">65020304</option>';
+            VILL_CODE_options_str  += '<option value="65020305">65020305</option>';
+            VILL_CODE_options_str  += '<option value="65020307">65020307</option>';
+            VILL_CODE_options_str  += '<option value="65020308">65020308</option>';
+            VILL_CODE_options_str  += '<option value="65020310">65020310</option>';
+            VILL_CODE_options_str  += '<option value="65020401">65020401</option>';
+            VILL_CODE_options_str  += '<option value="65020402">65020402</option>';
+            VILL_CODE_options_str  += '<option value="65020403">65020403</option>';
+            VILL_CODE_options_str  += '<option value="65020404">65020404</option>';
+            VILL_CODE_options_str  += '<option value="65020405">65020405</option>';
+            VILL_CODE_options_str  += '<option value="65020406">65020406</option>';
+            VILL_CODE_options_str  += '<option value="65020407">65020407</option>';
+            VILL_CODE_options_str  += '<option value="65020408">65020408</option>';
+            VILL_CODE_options_str  += '<option value="65020409">65020409</option>';
+            VILL_CODE_options_str  += '<option value="65020410">65020410</option>';
+            VILL_CODE_options_str  += '<option value="65020411">65020411</option>';
+            VILL_CODE_options_str  += '<option value="65020412">65020412</option>';
+            VILL_CODE_options_str  += '<option value="65020413">65020413</option>';
+            VILL_CODE_options_str  += '<option value="65020414">65020414</option>';
+            VILL_CODE_options_str  += '<option value="65020415">65020415</option>';
+            VILL_CODE_options_str  += '<option value="65020501">65020501</option>';
+            VILL_CODE_options_str  += '<option value="65020502">65020502</option>';
+            VILL_CODE_options_str  += '<option value="65020503">65020503</option>';
+            VILL_CODE_options_str  += '<option value="65020504">65020504</option>';
+            VILL_CODE_options_str  += '<option value="65020505">65020505</option>';
+            VILL_CODE_options_str  += '<option value="65020506">65020506</option>';
+            VILL_CODE_options_str  += '<option value="65020507">65020507</option>';
+            VILL_CODE_options_str  += '<option value="65020508">65020508</option>';
+            VILL_CODE_options_str  += '<option value="65020509">65020509</option>';
+            VILL_CODE_options_str  += '<option value="65020510">65020510</option>';
+            VILL_CODE_options_str  += '<option value="65020511">65020511</option>';
+            VILL_CODE_options_str  += '<option value="65020512">65020512</option>';
+            VILL_CODE_options_str  += '<option value="65020513">65020513</option>';
+            VILL_CODE_options_str  += '<option value="65020514">65020514</option>';
+            VILL_CODE_options_str  += '<option value="65020515">65020515</option>';
+            VILL_CODE_options_str  += '<option value="65020601">65020601</option>';
+            VILL_CODE_options_str  += '<option value="65020602">65020602</option>';
+            VILL_CODE_options_str  += '<option value="65020603">65020603</option>';
+            VILL_CODE_options_str  += '<option value="65020604">65020604</option>';
+            VILL_CODE_options_str  += '<option value="65020605">65020605</option>';
+            VILL_CODE_options_str  += '<option value="65020606">65020606</option>';
+            VILL_CODE_options_str  += '<option value="65020607">65020607</option>';
+            VILL_CODE_options_str  += '<option value="65020608">65020608</option>';
+            VILL_CODE_options_str  += '<option value="65020701">65020701</option>';
+            VILL_CODE_options_str  += '<option value="65020702">65020702</option>';
+            VILL_CODE_options_str  += '<option value="65020703">65020703</option>';
+            VILL_CODE_options_str  += '<option value="65020704">65020704</option>';
+            VILL_CODE_options_str  += '<option value="65020705">65020705</option>';
+            VILL_CODE_options_str  += '<option value="65020706">65020706</option>';
+            VILL_CODE_options_str  += '<option value="65020707">65020707</option>';
+            VILL_CODE_options_str  += '<option value="65020801">65020801</option>';
+            VILL_CODE_options_str  += '<option value="65020802">65020802</option>';
+            VILL_CODE_options_str  += '<option value="65020803">65020803</option>';
+            VILL_CODE_options_str  += '<option value="65020804">65020804</option>';
+            VILL_CODE_options_str  += '<option value="65020805">65020805</option>';
+            VILL_CODE_options_str  += '<option value="65020806">65020806</option>';
+            VILL_CODE_options_str  += '<option value="65020807">65020807</option>';
+            VILL_CODE_options_str  += '<option value="65020808">65020808</option>';
+            VILL_CODE_options_str  += '<option value="65020809">65020809</option>';
+            VILL_CODE_options_str  += '<option value="65020810">65020810</option>';
+            VILL_CODE_options_str  += '<option value="65020901">65020901</option>';
+            VILL_CODE_options_str  += '<option value="65020902">65020902</option>';
+            VILL_CODE_options_str  += '<option value="65020903">65020903</option>';
+            VILL_CODE_options_str  += '<option value="65020904">65020904</option>';
+            VILL_CODE_options_str  += '<option value="65020905">65020905</option>';
+            VILL_CODE_options_str  += '<option value="65020906">65020906</option>';
+            VILL_CODE_options_str  += '<option value="65020907">65020907</option>';
+            VILL_CODE_options_str  += '<option value="65020908">65020908</option>';
+            VILL_CODE_options_str  += '<option value="65020909">65020909</option>';
+            VILL_CODE_options_str  += '<option value="65020910">65020910</option>';
+            VILL_CODE_options_str  += '<option value="65020911">65020911</option>';
+            VILL_CODE_options_str  += '<option value="65020912">65020912</option>';
+            VILL_CODE_options_str  += '<option value="65020913">65020913</option>';
+            VILL_CODE_options_str  += '<option value="65020914">65020914</option>';
+            VILL_CODE_options_str  += '<option value="65021001">65021001</option>';
+            VILL_CODE_options_str  += '<option value="65021002">65021002</option>';
+            VILL_CODE_options_str  += '<option value="65021003">65021003</option>';
+            VILL_CODE_options_str  += '<option value="65021004">65021004</option>';
+            VILL_CODE_options_str  += '<option value="65021005">65021005</option>';
+            VILL_CODE_options_str  += '<option value="65021006">65021006</option>';
+            VILL_CODE_options_str  += '<option value="65021007">65021007</option>';
+            VILL_CODE_options_str  += '<option value="65021008">65021008</option>';
+            VILL_CODE_options_str  += '<option value="65021101">65021101</option>';
+            VILL_CODE_options_str  += '<option value="65021102">65021102</option>';
+            VILL_CODE_options_str  += '<option value="65021103">65021103</option>';
+            VILL_CODE_options_str  += '<option value="65021104">65021104</option>';
+            VILL_CODE_options_str  += '<option value="65021105">65021105</option>';
+            VILL_CODE_options_str  += '<option value="65021106">65021106</option>';
+            VILL_CODE_options_str  += '<option value="65021107">65021107</option>';
+            VILL_CODE_options_str  += '<option value="65021109">65021109</option>';
+            VILL_CODE_options_str  += '<option value="65030101">65030101</option>';
+            VILL_CODE_options_str  += '<option value="65030102">65030102</option>';
+            VILL_CODE_options_str  += '<option value="65030103">65030103</option>';
+            VILL_CODE_options_str  += '<option value="65030104">65030104</option>';
+            VILL_CODE_options_str  += '<option value="65030105">65030105</option>';
+            VILL_CODE_options_str  += '<option value="65030106">65030106</option>';
+            VILL_CODE_options_str  += '<option value="65030107">65030107</option>';
+            VILL_CODE_options_str  += '<option value="65030108">65030108</option>';
+            VILL_CODE_options_str  += '<option value="65030109">65030109</option>';
+            VILL_CODE_options_str  += '<option value="65030110">65030110</option>';
+            VILL_CODE_options_str  += '<option value="65030111">65030111</option>';
+            VILL_CODE_options_str  += '<option value="65030112">65030112</option>';
+            VILL_CODE_options_str  += '<option value="65030201">65030201</option>';
+            VILL_CODE_options_str  += '<option value="65030202">65030202</option>';
+            VILL_CODE_options_str  += '<option value="65030203">65030203</option>';
+            VILL_CODE_options_str  += '<option value="65030204">65030204</option>';
+            VILL_CODE_options_str  += '<option value="65030205">65030205</option>';
+            VILL_CODE_options_str  += '<option value="65030206">65030206</option>';
+            VILL_CODE_options_str  += '<option value="65030207">65030207</option>';
+            VILL_CODE_options_str  += '<option value="65030208">65030208</option>';
+            VILL_CODE_options_str  += '<option value="65030209">65030209</option>';
+            VILL_CODE_options_str  += '<option value="65030301">65030301</option>';
+            VILL_CODE_options_str  += '<option value="65030302">65030302</option>';
+            VILL_CODE_options_str  += '<option value="65030303">65030303</option>';
+            VILL_CODE_options_str  += '<option value="65030304">65030304</option>';
+            VILL_CODE_options_str  += '<option value="65030305">65030305</option>';
+            VILL_CODE_options_str  += '<option value="65030306">65030306</option>';
+            VILL_CODE_options_str  += '<option value="65030307">65030307</option>';
+            VILL_CODE_options_str  += '<option value="65030308">65030308</option>';
+            VILL_CODE_options_str  += '<option value="65030309">65030309</option>';
+            VILL_CODE_options_str  += '<option value="65030310">65030310</option>';
+            VILL_CODE_options_str  += '<option value="65030401">65030401</option>';
+            VILL_CODE_options_str  += '<option value="65030402">65030402</option>';
+            VILL_CODE_options_str  += '<option value="65030403">65030403</option>';
+            VILL_CODE_options_str  += '<option value="65030404">65030404</option>';
+            VILL_CODE_options_str  += '<option value="65030405">65030405</option>';
+            VILL_CODE_options_str  += '<option value="65030406">65030406</option>';
+            VILL_CODE_options_str  += '<option value="65030407">65030407</option>';
+            VILL_CODE_options_str  += '<option value="65030408">65030408</option>';
+            VILL_CODE_options_str  += '<option value="65030409">65030409</option>';
+            VILL_CODE_options_str  += '<option value="65030410">65030410</option>';
+            VILL_CODE_options_str  += '<option value="65030411">65030411</option>';
+            VILL_CODE_options_str  += '<option value="65030412">65030412</option>';
+            VILL_CODE_options_str  += '<option value="65030413">65030413</option>';
+            VILL_CODE_options_str  += '<option value="65030414">65030414</option>';
+            VILL_CODE_options_str  += '<option value="65030501">65030501</option>';
+            VILL_CODE_options_str  += '<option value="65030502">65030502</option>';
+            VILL_CODE_options_str  += '<option value="65030503">65030503</option>';
+            VILL_CODE_options_str  += '<option value="65030505">65030505</option>';
+            VILL_CODE_options_str  += '<option value="65030506">65030506</option>';
+            VILL_CODE_options_str  += '<option value="65030507">65030507</option>';
+            VILL_CODE_options_str  += '<option value="65030508">65030508</option>';
+            VILL_CODE_options_str  += '<option value="65030509">65030509</option>';
+            VILL_CODE_options_str  += '<option value="65030510">65030510</option>';
+            VILL_CODE_options_str  += '<option value="65030511">65030511</option>';
+            VILL_CODE_options_str  += '<option value="65030601">65030601</option>';
+            VILL_CODE_options_str  += '<option value="65030602">65030602</option>';
+            VILL_CODE_options_str  += '<option value="65030603">65030603</option>';
+            VILL_CODE_options_str  += '<option value="65030604">65030604</option>';
+            VILL_CODE_options_str  += '<option value="65030605">65030605</option>';
+            VILL_CODE_options_str  += '<option value="65030606">65030606</option>';
+            VILL_CODE_options_str  += '<option value="65030607">65030607</option>';
+            VILL_CODE_options_str  += '<option value="65030608">65030608</option>';
+            VILL_CODE_options_str  += '<option value="65040101">65040101</option>';
+            VILL_CODE_options_str  += '<option value="65040102">65040102</option>';
+            VILL_CODE_options_str  += '<option value="65040103">65040103</option>';
+            VILL_CODE_options_str  += '<option value="65040104">65040104</option>';
+            VILL_CODE_options_str  += '<option value="65040105">65040105</option>';
+            VILL_CODE_options_str  += '<option value="65040106">65040106</option>';
+            VILL_CODE_options_str  += '<option value="65040107">65040107</option>';
+            VILL_CODE_options_str  += '<option value="65040108">65040108</option>';
+            VILL_CODE_options_str  += '<option value="65040109">65040109</option>';
+            VILL_CODE_options_str  += '<option value="65040110">65040110</option>';
+            VILL_CODE_options_str  += '<option value="65040111">65040111</option>';
+            VILL_CODE_options_str  += '<option value="65040112">65040112</option>';
+            VILL_CODE_options_str  += '<option value="65040113">65040113</option>';
+            VILL_CODE_options_str  += '<option value="65040114">65040114</option>';
+            VILL_CODE_options_str  += '<option value="65040115">65040115</option>';
+            VILL_CODE_options_str  += '<option value="65040116">65040116</option>';
+            VILL_CODE_options_str  += '<option value="65040117">65040117</option>';
+            VILL_CODE_options_str  += '<option value="65040201">65040201</option>';
+            VILL_CODE_options_str  += '<option value="65040202">65040202</option>';
+            VILL_CODE_options_str  += '<option value="65040203">65040203</option>';
+            VILL_CODE_options_str  += '<option value="65040204">65040204</option>';
+            VILL_CODE_options_str  += '<option value="65040205">65040205</option>';
+            VILL_CODE_options_str  += '<option value="65040206">65040206</option>';
+            VILL_CODE_options_str  += '<option value="65040207">65040207</option>';
+            VILL_CODE_options_str  += '<option value="65040208">65040208</option>';
+            VILL_CODE_options_str  += '<option value="65040209">65040209</option>';
+            VILL_CODE_options_str  += '<option value="65040301">65040301</option>';
+            VILL_CODE_options_str  += '<option value="65040302">65040302</option>';
+            VILL_CODE_options_str  += '<option value="65040303">65040303</option>';
+            VILL_CODE_options_str  += '<option value="65040304">65040304</option>';
+            VILL_CODE_options_str  += '<option value="65040305">65040305</option>';
+            VILL_CODE_options_str  += '<option value="65040306">65040306</option>';
+            VILL_CODE_options_str  += '<option value="65040307">65040307</option>';
+            VILL_CODE_options_str  += '<option value="65040308">65040308</option>';
+            VILL_CODE_options_str  += '<option value="65040309">65040309</option>';
+            VILL_CODE_options_str  += '<option value="65040310">65040310</option>';
+            VILL_CODE_options_str  += '<option value="65040401">65040401</option>';
+            VILL_CODE_options_str  += '<option value="65040402">65040402</option>';
+            VILL_CODE_options_str  += '<option value="65040403">65040403</option>';
+            VILL_CODE_options_str  += '<option value="65040404">65040404</option>';
+            VILL_CODE_options_str  += '<option value="65040405">65040405</option>';
+            VILL_CODE_options_str  += '<option value="65040406">65040406</option>';
+            VILL_CODE_options_str  += '<option value="65040407">65040407</option>';
+            VILL_CODE_options_str  += '<option value="65040501">65040501</option>';
+            VILL_CODE_options_str  += '<option value="65040502">65040502</option>';
+            VILL_CODE_options_str  += '<option value="65040503">65040503</option>';
+            VILL_CODE_options_str  += '<option value="65040504">65040504</option>';
+            VILL_CODE_options_str  += '<option value="65040505">65040505</option>';
+            VILL_CODE_options_str  += '<option value="65040506">65040506</option>';
+            VILL_CODE_options_str  += '<option value="65040507">65040507</option>';
+            VILL_CODE_options_str  += '<option value="65040508">65040508</option>';
+            VILL_CODE_options_str  += '<option value="65040509">65040509</option>';
+            VILL_CODE_options_str  += '<option value="65040601">65040601</option>';
+            VILL_CODE_options_str  += '<option value="65040602">65040602</option>';
+            VILL_CODE_options_str  += '<option value="65040603">65040603</option>';
+            VILL_CODE_options_str  += '<option value="65040604">65040604</option>';
+            VILL_CODE_options_str  += '<option value="65040605">65040605</option>';
+            VILL_CODE_options_str  += '<option value="65040606">65040606</option>';
+            VILL_CODE_options_str  += '<option value="65040607">65040607</option>';
+            VILL_CODE_options_str  += '<option value="65040608">65040608</option>';
+            VILL_CODE_options_str  += '<option value="65040609">65040609</option>';
+            VILL_CODE_options_str  += '<option value="65040610">65040610</option>';
+            VILL_CODE_options_str  += '<option value="65040611">65040611</option>';
+            VILL_CODE_options_str  += '<option value="65040612">65040612</option>';
+            VILL_CODE_options_str  += '<option value="65040613">65040613</option>';
+            VILL_CODE_options_str  += '<option value="65040614">65040614</option>';
+            VILL_CODE_options_str  += '<option value="65040615">65040615</option>';
+            VILL_CODE_options_str  += '<option value="65040616">65040616</option>';
+            VILL_CODE_options_str  += '<option value="65040701">65040701</option>';
+            VILL_CODE_options_str  += '<option value="65040702">65040702</option>';
+            VILL_CODE_options_str  += '<option value="65040703">65040703</option>';
+            VILL_CODE_options_str  += '<option value="65040704">65040704</option>';
+            VILL_CODE_options_str  += '<option value="65040705">65040705</option>';
+            VILL_CODE_options_str  += '<option value="65040706">65040706</option>';
+            VILL_CODE_options_str  += '<option value="65040707">65040707</option>';
+            VILL_CODE_options_str  += '<option value="65040708">65040708</option>';
+            VILL_CODE_options_str  += '<option value="65040709">65040709</option>';
+            VILL_CODE_options_str  += '<option value="65040710">65040710</option>';
+            VILL_CODE_options_str  += '<option value="65040711">65040711</option>';
+            VILL_CODE_options_str  += '<option value="65040801">65040801</option>';
+            VILL_CODE_options_str  += '<option value="65040802">65040802</option>';
+            VILL_CODE_options_str  += '<option value="65040803">65040803</option>';
+            VILL_CODE_options_str  += '<option value="65040804">65040804</option>';
+            VILL_CODE_options_str  += '<option value="65040805">65040805</option>';
+            VILL_CODE_options_str  += '<option value="65040806">65040806</option>';
+            VILL_CODE_options_str  += '<option value="65040807">65040807</option>';
+            VILL_CODE_options_str  += '<option value="65040808">65040808</option>';
+            VILL_CODE_options_str  += '<option value="65040809">65040809</option>';
+            VILL_CODE_options_str  += '<option value="65040810">65040810</option>';
+            VILL_CODE_options_str  += '<option value="65040901">65040901</option>';
+            VILL_CODE_options_str  += '<option value="65040902">65040902</option>';
+            VILL_CODE_options_str  += '<option value="65040903">65040903</option>';
+            VILL_CODE_options_str  += '<option value="65040904">65040904</option>';
+            VILL_CODE_options_str  += '<option value="65040905">65040905</option>';
+            VILL_CODE_options_str  += '<option value="65040906">65040906</option>';
+            VILL_CODE_options_str  += '<option value="65040907">65040907</option>';
+            VILL_CODE_options_str  += '<option value="65040908">65040908</option>';
+            VILL_CODE_options_str  += '<option value="65040909">65040909</option>';
+            VILL_CODE_options_str  += '<option value="65040910">65040910</option>';
+            VILL_CODE_options_str  += '<option value="65041001">65041001</option>';
+            VILL_CODE_options_str  += '<option value="65041002">65041002</option>';
+            VILL_CODE_options_str  += '<option value="65041003">65041003</option>';
+            VILL_CODE_options_str  += '<option value="65041004">65041004</option>';
+            VILL_CODE_options_str  += '<option value="65041005">65041005</option>';
+            VILL_CODE_options_str  += '<option value="65041006">65041006</option>';
+            VILL_CODE_options_str  += '<option value="65041007">65041007</option>';
+            VILL_CODE_options_str  += '<option value="65041008">65041008</option>';
+            VILL_CODE_options_str  += '<option value="65041009">65041009</option>';
+            VILL_CODE_options_str  += '<option value="65041010">65041010</option>';
+            VILL_CODE_options_str  += '<option value="65041011">65041011</option>';
+            VILL_CODE_options_str  += '<option value="65041101">65041101</option>';
+            VILL_CODE_options_str  += '<option value="65041102">65041102</option>';
+            VILL_CODE_options_str  += '<option value="65041103">65041103</option>';
+            VILL_CODE_options_str  += '<option value="65041104">65041104</option>';
+            VILL_CODE_options_str  += '<option value="65041105">65041105</option>';
+            VILL_CODE_options_str  += '<option value="65041106">65041106</option>';
+            VILL_CODE_options_str  += '<option value="65041107">65041107</option>';
+            VILL_CODE_options_str  += '<option value="65041108">65041108</option>';
+            VILL_CODE_options_str  += '<option value="65041109">65041109</option>';
+            VILL_CODE_options_str  += '<option value="65050101">65050101</option>';
+            VILL_CODE_options_str  += '<option value="65050102">65050102</option>';
+            VILL_CODE_options_str  += '<option value="65050103">65050103</option>';
+            VILL_CODE_options_str  += '<option value="65050104">65050104</option>';
+            VILL_CODE_options_str  += '<option value="65050105">65050105</option>';
+            VILL_CODE_options_str  += '<option value="65050106">65050106</option>';
+            VILL_CODE_options_str  += '<option value="65050107">65050107</option>';
+            VILL_CODE_options_str  += '<option value="65050108">65050108</option>';
+            VILL_CODE_options_str  += '<option value="65050109">65050109</option>';
+            VILL_CODE_options_str  += '<option value="65050201">65050201</option>';
+            VILL_CODE_options_str  += '<option value="65050202">65050202</option>';
+            VILL_CODE_options_str  += '<option value="65050203">65050203</option>';
+            VILL_CODE_options_str  += '<option value="65050204">65050204</option>';
+            VILL_CODE_options_str  += '<option value="65050205">65050205</option>';
+            VILL_CODE_options_str  += '<option value="65050206">65050206</option>';
+            VILL_CODE_options_str  += '<option value="65050207">65050207</option>';
+            VILL_CODE_options_str  += '<option value="65050208">65050208</option>';
+            VILL_CODE_options_str  += '<option value="65050209">65050209</option>';
+            VILL_CODE_options_str  += '<option value="65050210">65050210</option>';
+            VILL_CODE_options_str  += '<option value="65050301">65050301</option>';
+            VILL_CODE_options_str  += '<option value="65050302">65050302</option>';
+            VILL_CODE_options_str  += '<option value="65050303">65050303</option>';
+            VILL_CODE_options_str  += '<option value="65050304">65050304</option>';
+            VILL_CODE_options_str  += '<option value="65050305">65050305</option>';
+            VILL_CODE_options_str  += '<option value="65050306">65050306</option>';
+            VILL_CODE_options_str  += '<option value="65050307">65050307</option>';
+            VILL_CODE_options_str  += '<option value="65050308">65050308</option>';
+            VILL_CODE_options_str  += '<option value="65050309">65050309</option>';
+            VILL_CODE_options_str  += '<option value="65050310">65050310</option>';
+            VILL_CODE_options_str  += '<option value="65050401">65050401</option>';
+            VILL_CODE_options_str  += '<option value="65050402">65050402</option>';
+            VILL_CODE_options_str  += '<option value="65050403">65050403</option>';
+            VILL_CODE_options_str  += '<option value="65050404">65050404</option>';
+            VILL_CODE_options_str  += '<option value="65050405">65050405</option>';
+            VILL_CODE_options_str  += '<option value="65050406">65050406</option>';
+            VILL_CODE_options_str  += '<option value="65050501">65050501</option>';
+            VILL_CODE_options_str  += '<option value="65050502">65050502</option>';
+            VILL_CODE_options_str  += '<option value="65050503">65050503</option>';
+            VILL_CODE_options_str  += '<option value="65050504">65050504</option>';
+            VILL_CODE_options_str  += '<option value="65050505">65050505</option>';
+            VILL_CODE_options_str  += '<option value="65050506">65050506</option>';
+            VILL_CODE_options_str  += '<option value="65050507">65050507</option>';
+            VILL_CODE_options_str  += '<option value="65050508">65050508</option>';
+            VILL_CODE_options_str  += '<option value="65050601">65050601</option>';
+            VILL_CODE_options_str  += '<option value="65050602">65050602</option>';
+            VILL_CODE_options_str  += '<option value="65050603">65050603</option>';
+            VILL_CODE_options_str  += '<option value="65050604">65050604</option>';
+            VILL_CODE_options_str  += '<option value="65050605">65050605</option>';
+            VILL_CODE_options_str  += '<option value="65050606">65050606</option>';
+            VILL_CODE_options_str  += '<option value="65050607">65050607</option>';
+            VILL_CODE_options_str  += '<option value="65050608">65050608</option>';
+            VILL_CODE_options_str  += '<option value="65050609">65050609</option>';
+            VILL_CODE_options_str  += '<option value="65050610">65050610</option>';
+            VILL_CODE_options_str  += '<option value="65050611">65050611</option>';
+            VILL_CODE_options_str  += '<option value="65050701">65050701</option>';
+            VILL_CODE_options_str  += '<option value="65050702">65050702</option>';
+            VILL_CODE_options_str  += '<option value="65050703">65050703</option>';
+            VILL_CODE_options_str  += '<option value="65050704">65050704</option>';
+            VILL_CODE_options_str  += '<option value="65050705">65050705</option>';
+            VILL_CODE_options_str  += '<option value="65050706">65050706</option>';
+            VILL_CODE_options_str  += '<option value="65050707">65050707</option>';
+            VILL_CODE_options_str  += '<option value="65050708">65050708</option>';
+            VILL_CODE_options_str  += '<option value="65050709">65050709</option>';
+            VILL_CODE_options_str  += '<option value="65050710">65050710</option>';
+            VILL_CODE_options_str  += '<option value="65050711">65050711</option>';
+            VILL_CODE_options_str  += '<option value="65050712">65050712</option>';
+            VILL_CODE_options_str  += '<option value="65050713">65050713</option>';
+            VILL_CODE_options_str  += '<option value="65050801">65050801</option>';
+            VILL_CODE_options_str  += '<option value="65050802">65050802</option>';
+            VILL_CODE_options_str  += '<option value="65050803">65050803</option>';
+            VILL_CODE_options_str  += '<option value="65050804">65050804</option>';
+            VILL_CODE_options_str  += '<option value="65050805">65050805</option>';
+            VILL_CODE_options_str  += '<option value="65050806">65050806</option>';
+            VILL_CODE_options_str  += '<option value="65050807">65050807</option>';
+            VILL_CODE_options_str  += '<option value="65050808">65050808</option>';
+            VILL_CODE_options_str  += '<option value="65050809">65050809</option>';
+            VILL_CODE_options_str  += '<option value="65050810">65050810</option>';
+            VILL_CODE_options_str  += '<option value="65050811">65050811</option>';
+            VILL_CODE_options_str  += '<option value="65050901">65050901</option>';
+            VILL_CODE_options_str  += '<option value="65050902">65050902</option>';
+            VILL_CODE_options_str  += '<option value="65050903">65050903</option>';
+            VILL_CODE_options_str  += '<option value="65050904">65050904</option>';
+            VILL_CODE_options_str  += '<option value="65050905">65050905</option>';
+            VILL_CODE_options_str  += '<option value="65050906">65050906</option>';
+            VILL_CODE_options_str  += '<option value="65050907">65050907</option>';
+            VILL_CODE_options_str  += '<option value="65050908">65050908</option>';
+            VILL_CODE_options_str  += '<option value="65060101">65060101</option>';
+            VILL_CODE_options_str  += '<option value="65060102">65060102</option>';
+            VILL_CODE_options_str  += '<option value="65060103">65060103</option>';
+            VILL_CODE_options_str  += '<option value="65060104">65060104</option>';
+            VILL_CODE_options_str  += '<option value="65060105">65060105</option>';
+            VILL_CODE_options_str  += '<option value="65060106">65060106</option>';
+            VILL_CODE_options_str  += '<option value="65060107">65060107</option>';
+            VILL_CODE_options_str  += '<option value="65060108">65060108</option>';
+            VILL_CODE_options_str  += '<option value="65060109">65060109</option>';
+            VILL_CODE_options_str  += '<option value="65060110">65060110</option>';
+            VILL_CODE_options_str  += '<option value="65060111">65060111</option>';
+            VILL_CODE_options_str  += '<option value="65060112">65060112</option>';
+            VILL_CODE_options_str  += '<option value="65060201">65060201</option>';
+            VILL_CODE_options_str  += '<option value="65060202">65060202</option>';
+            VILL_CODE_options_str  += '<option value="65060203">65060203</option>';
+            VILL_CODE_options_str  += '<option value="65060204">65060204</option>';
+            VILL_CODE_options_str  += '<option value="65060205">65060205</option>';
+            VILL_CODE_options_str  += '<option value="65060206">65060206</option>';
+            VILL_CODE_options_str  += '<option value="65060207">65060207</option>';
+            VILL_CODE_options_str  += '<option value="65060208">65060208</option>';
+            VILL_CODE_options_str  += '<option value="65060209">65060209</option>';
+            VILL_CODE_options_str  += '<option value="65060210">65060210</option>';
+            VILL_CODE_options_str  += '<option value="65060211">65060211</option>';
+            VILL_CODE_options_str  += '<option value="65060212">65060212</option>';
+            VILL_CODE_options_str  += '<option value="65060213">65060213</option>';
+            VILL_CODE_options_str  += '<option value="65060301">65060301</option>';
+            VILL_CODE_options_str  += '<option value="65060302">65060302</option>';
+            VILL_CODE_options_str  += '<option value="65060303">65060303</option>';
+            VILL_CODE_options_str  += '<option value="65060304">65060304</option>';
+            VILL_CODE_options_str  += '<option value="65060305">65060305</option>';
+            VILL_CODE_options_str  += '<option value="65060306">65060306</option>';
+            VILL_CODE_options_str  += '<option value="65060307">65060307</option>';
+            VILL_CODE_options_str  += '<option value="65060308">65060308</option>';
+            VILL_CODE_options_str  += '<option value="65060309">65060309</option>';
+            VILL_CODE_options_str  += '<option value="65060310">65060310</option>';
+            VILL_CODE_options_str  += '<option value="65060311">65060311</option>';
+            VILL_CODE_options_str  += '<option value="65060401">65060401</option>';
+            VILL_CODE_options_str  += '<option value="65060402">65060402</option>';
+            VILL_CODE_options_str  += '<option value="65060403">65060403</option>';
+            VILL_CODE_options_str  += '<option value="65060404">65060404</option>';
+            VILL_CODE_options_str  += '<option value="65060405">65060405</option>';
+            VILL_CODE_options_str  += '<option value="65060406">65060406</option>';
+            VILL_CODE_options_str  += '<option value="65060501">65060501</option>';
+            VILL_CODE_options_str  += '<option value="65060502">65060502</option>';
+            VILL_CODE_options_str  += '<option value="65060503">65060503</option>';
+            VILL_CODE_options_str  += '<option value="65060504">65060504</option>';
+            VILL_CODE_options_str  += '<option value="65060505">65060505</option>';
+            VILL_CODE_options_str  += '<option value="65060506">65060506</option>';
+            VILL_CODE_options_str  += '<option value="65060601">65060601</option>';
+            VILL_CODE_options_str  += '<option value="65060602">65060602</option>';
+            VILL_CODE_options_str  += '<option value="65060603">65060603</option>';
+            VILL_CODE_options_str  += '<option value="65060604">65060604</option>';
+            VILL_CODE_options_str  += '<option value="65060605">65060605</option>';
+            VILL_CODE_options_str  += '<option value="65060606">65060606</option>';
+            VILL_CODE_options_str  += '<option value="65060607">65060607</option>';
+            VILL_CODE_options_str  += '<option value="65060608">65060608</option>';
+            VILL_CODE_options_str  += '<option value="65060609">65060609</option>';
+            VILL_CODE_options_str  += '<option value="65060610">65060610</option>';
+            VILL_CODE_options_str  += '<option value="65060611">65060611</option>';
+            VILL_CODE_options_str  += '<option value="65060612">65060612</option>';
+            VILL_CODE_options_str  += '<option value="65060701">65060701</option>';
+            VILL_CODE_options_str  += '<option value="65060702">65060702</option>';
+            VILL_CODE_options_str  += '<option value="65060703">65060703</option>';
+            VILL_CODE_options_str  += '<option value="65060704">65060704</option>';
+            VILL_CODE_options_str  += '<option value="65060705">65060705</option>';
+            VILL_CODE_options_str  += '<option value="65060706">65060706</option>';
+            VILL_CODE_options_str  += '<option value="65060707">65060707</option>';
+            VILL_CODE_options_str  += '<option value="65060708">65060708</option>';
+            VILL_CODE_options_str  += '<option value="65060801">65060801</option>';
+            VILL_CODE_options_str  += '<option value="65060802">65060802</option>';
+            VILL_CODE_options_str  += '<option value="65060803">65060803</option>';
+            VILL_CODE_options_str  += '<option value="65060804">65060804</option>';
+            VILL_CODE_options_str  += '<option value="65060805">65060805</option>';
+            VILL_CODE_options_str  += '<option value="65060806">65060806</option>';
+            VILL_CODE_options_str  += '<option value="65060807">65060807</option>';
+            VILL_CODE_options_str  += '<option value="65060808">65060808</option>';
+            VILL_CODE_options_str  += '<option value="65060809">65060809</option>';
+            VILL_CODE_options_str  += '<option value="65060810">65060810</option>';
+            VILL_CODE_options_str  += '<option value="65060901">65060901</option>';
+            VILL_CODE_options_str  += '<option value="65060902">65060902</option>';
+            VILL_CODE_options_str  += '<option value="65060903">65060903</option>';
+            VILL_CODE_options_str  += '<option value="65060904">65060904</option>';
+            VILL_CODE_options_str  += '<option value="65060905">65060905</option>';
+            VILL_CODE_options_str  += '<option value="65060906">65060906</option>';
+            VILL_CODE_options_str  += '<option value="65060907">65060907</option>';
+            VILL_CODE_options_str  += '<option value="65060908">65060908</option>';
+            VILL_CODE_options_str  += '<option value="65060909">65060909</option>';
+            VILL_CODE_options_str  += '<option value="65061001">65061001</option>';
+            VILL_CODE_options_str  += '<option value="65061002">65061002</option>';
+            VILL_CODE_options_str  += '<option value="65061003">65061003</option>';
+            VILL_CODE_options_str  += '<option value="65061004">65061004</option>';
+            VILL_CODE_options_str  += '<option value="65061005">65061005</option>';
+            VILL_CODE_options_str  += '<option value="65061006">65061006</option>';
+            VILL_CODE_options_str  += '<option value="65061007">65061007</option>';
+            VILL_CODE_options_str  += '<option value="65061008">65061008</option>';
+            VILL_CODE_options_str  += '<option value="65061009">65061009</option>';
+            VILL_CODE_options_str  += '<option value="65061101">65061101</option>';
+            VILL_CODE_options_str  += '<option value="65061102">65061102</option>';
+            VILL_CODE_options_str  += '<option value="65061103">65061103</option>';
+            VILL_CODE_options_str  += '<option value="65061104">65061104</option>';
+            VILL_CODE_options_str  += '<option value="65061105">65061105</option>';
+            VILL_CODE_options_str  += '<option value="65061106">65061106</option>';
+            VILL_CODE_options_str  += '<option value="65061201">65061201</option>';
+            VILL_CODE_options_str  += '<option value="65061202">65061202</option>';
+            VILL_CODE_options_str  += '<option value="65061203">65061203</option>';
+            VILL_CODE_options_str  += '<option value="65061204">65061204</option>';
+            VILL_CODE_options_str  += '<option value="65061205">65061205</option>';
+            VILL_CODE_options_str  += '<option value="65061206">65061206</option>';
+            VILL_CODE_options_str  += '<option value="65061207">65061207</option>';
+            VILL_CODE_options_str  += '<option value="65061208">65061208</option>';
+            VILL_CODE_options_str  += '<option value="65070101">65070101</option>';
+            VILL_CODE_options_str  += '<option value="65070102">65070102</option>';
+            VILL_CODE_options_str  += '<option value="65070103">65070103</option>';
+            VILL_CODE_options_str  += '<option value="65070104">65070104</option>';
+            VILL_CODE_options_str  += '<option value="65070105">65070105</option>';
+            VILL_CODE_options_str  += '<option value="65070106">65070106</option>';
+            VILL_CODE_options_str  += '<option value="65070107">65070107</option>';
+            VILL_CODE_options_str  += '<option value="65070108">65070108</option>';
+            VILL_CODE_options_str  += '<option value="65070109">65070109</option>';
+            VILL_CODE_options_str  += '<option value="65070201">65070201</option>';
+            VILL_CODE_options_str  += '<option value="65070202">65070202</option>';
+            VILL_CODE_options_str  += '<option value="65070203">65070203</option>';
+            VILL_CODE_options_str  += '<option value="65070204">65070204</option>';
+            VILL_CODE_options_str  += '<option value="65070205">65070205</option>';
+            VILL_CODE_options_str  += '<option value="65070206">65070206</option>';
+            VILL_CODE_options_str  += '<option value="65070207">65070207</option>';
+            VILL_CODE_options_str  += '<option value="65070208">65070208</option>';
+            VILL_CODE_options_str  += '<option value="65070209">65070209</option>';
+            VILL_CODE_options_str  += '<option value="65070210">65070210</option>';
+            VILL_CODE_options_str  += '<option value="65070211">65070211</option>';
+            VILL_CODE_options_str  += '<option value="65070212">65070212</option>';
+            VILL_CODE_options_str  += '<option value="65070213">65070213</option>';
+            VILL_CODE_options_str  += '<option value="65070301">65070301</option>';
+            VILL_CODE_options_str  += '<option value="65070302">65070302</option>';
+            VILL_CODE_options_str  += '<option value="65070303">65070303</option>';
+            VILL_CODE_options_str  += '<option value="65070304">65070304</option>';
+            VILL_CODE_options_str  += '<option value="65070305">65070305</option>';
+            VILL_CODE_options_str  += '<option value="65070306">65070306</option>';
+            VILL_CODE_options_str  += '<option value="65070307">65070307</option>';
+            VILL_CODE_options_str  += '<option value="65070308">65070308</option>';
+            VILL_CODE_options_str  += '<option value="65070401">65070401</option>';
+            VILL_CODE_options_str  += '<option value="65070402">65070402</option>';
+            VILL_CODE_options_str  += '<option value="65070403">65070403</option>';
+            VILL_CODE_options_str  += '<option value="65070404">65070404</option>';
+            VILL_CODE_options_str  += '<option value="65070405">65070405</option>';
+            VILL_CODE_options_str  += '<option value="65070406">65070406</option>';
+            VILL_CODE_options_str  += '<option value="65070407">65070407</option>';
+            VILL_CODE_options_str  += '<option value="65070408">65070408</option>';
+            VILL_CODE_options_str  += '<option value="65070409">65070409</option>';
+            VILL_CODE_options_str  += '<option value="65070410">65070410</option>';
+            VILL_CODE_options_str  += '<option value="65070501">65070501</option>';
+            VILL_CODE_options_str  += '<option value="65070502">65070502</option>';
+            VILL_CODE_options_str  += '<option value="65070503">65070503</option>';
+            VILL_CODE_options_str  += '<option value="65070504">65070504</option>';
+            VILL_CODE_options_str  += '<option value="65070505">65070505</option>';
+            VILL_CODE_options_str  += '<option value="65070506">65070506</option>';
+            VILL_CODE_options_str  += '<option value="65070507">65070507</option>';
+            VILL_CODE_options_str  += '<option value="65070508">65070508</option>';
+            VILL_CODE_options_str  += '<option value="65070509">65070509</option>';
+            VILL_CODE_options_str  += '<option value="65070601">65070601</option>';
+            VILL_CODE_options_str  += '<option value="65070602">65070602</option>';
+            VILL_CODE_options_str  += '<option value="65070603">65070603</option>';
+            VILL_CODE_options_str  += '<option value="65070604">65070604</option>';
+            VILL_CODE_options_str  += '<option value="65070605">65070605</option>';
+            VILL_CODE_options_str  += '<option value="65070606">65070606</option>';
+            VILL_CODE_options_str  += '<option value="65070607">65070607</option>';
+            VILL_CODE_options_str  += '<option value="65070608">65070608</option>';
+            VILL_CODE_options_str  += '<option value="65080101">65080101</option>';
+            VILL_CODE_options_str  += '<option value="65080102">65080102</option>';
+            VILL_CODE_options_str  += '<option value="65080103">65080103</option>';
+            VILL_CODE_options_str  += '<option value="65080104">65080104</option>';
+            VILL_CODE_options_str  += '<option value="65080105">65080105</option>';
+            VILL_CODE_options_str  += '<option value="65080106">65080106</option>';
+            VILL_CODE_options_str  += '<option value="65080107">65080107</option>';
+            VILL_CODE_options_str  += '<option value="65080108">65080108</option>';
+            VILL_CODE_options_str  += '<option value="65080109">65080109</option>';
+            VILL_CODE_options_str  += '<option value="65080110">65080110</option>';
+            VILL_CODE_options_str  += '<option value="65080111">65080111</option>';
+            VILL_CODE_options_str  += '<option value="65080201">65080201</option>';
+            VILL_CODE_options_str  += '<option value="65080202">65080202</option>';
+            VILL_CODE_options_str  += '<option value="65080203">65080203</option>';
+            VILL_CODE_options_str  += '<option value="65080204">65080204</option>';
+            VILL_CODE_options_str  += '<option value="65080205">65080205</option>';
+            VILL_CODE_options_str  += '<option value="65080206">65080206</option>';
+            VILL_CODE_options_str  += '<option value="65080207">65080207</option>';
+            VILL_CODE_options_str  += '<option value="65080208">65080208</option>';
+            VILL_CODE_options_str  += '<option value="65080209">65080209</option>';
+            VILL_CODE_options_str  += '<option value="65080210">65080210</option>';
+            VILL_CODE_options_str  += '<option value="65080211">65080211</option>';
+            VILL_CODE_options_str  += '<option value="65080212">65080212</option>';
+            VILL_CODE_options_str  += '<option value="65080213">65080213</option>';
+            VILL_CODE_options_str  += '<option value="65080301">65080301</option>';
+            VILL_CODE_options_str  += '<option value="65080302">65080302</option>';
+            VILL_CODE_options_str  += '<option value="65080303">65080303</option>';
+            VILL_CODE_options_str  += '<option value="65080304">65080304</option>';
+            VILL_CODE_options_str  += '<option value="65080305">65080305</option>';
+            VILL_CODE_options_str  += '<option value="65080306">65080306</option>';
+            VILL_CODE_options_str  += '<option value="65080307">65080307</option>';
+            VILL_CODE_options_str  += '<option value="65080308">65080308</option>';
+            VILL_CODE_options_str  += '<option value="65080309">65080309</option>';
+            VILL_CODE_options_str  += '<option value="65080310">65080310</option>';
+            VILL_CODE_options_str  += '<option value="65080311">65080311</option>';
+            VILL_CODE_options_str  += '<option value="65080312">65080312</option>';
+            VILL_CODE_options_str  += '<option value="65080313">65080313</option>';
+            VILL_CODE_options_str  += '<option value="65080314">65080314</option>';
+            VILL_CODE_options_str  += '<option value="65080401">65080401</option>';
+            VILL_CODE_options_str  += '<option value="65080402">65080402</option>';
+            VILL_CODE_options_str  += '<option value="65080403">65080403</option>';
+            VILL_CODE_options_str  += '<option value="65080404">65080404</option>';
+            VILL_CODE_options_str  += '<option value="65080405">65080405</option>';
+            VILL_CODE_options_str  += '<option value="65080406">65080406</option>';
+            VILL_CODE_options_str  += '<option value="65080407">65080407</option>';
+            VILL_CODE_options_str  += '<option value="65080408">65080408</option>';
+            VILL_CODE_options_str  += '<option value="65080409">65080409</option>';
+            VILL_CODE_options_str  += '<option value="65080410">65080410</option>';
+            VILL_CODE_options_str  += '<option value="65080411">65080411</option>';
+            VILL_CODE_options_str  += '<option value="65080412">65080412</option>';
+            VILL_CODE_options_str  += '<option value="65080413">65080413</option>';
+            VILL_CODE_options_str  += '<option value="65080414">65080414</option>';
+            VILL_CODE_options_str  += '<option value="65080415">65080415</option>';
+            VILL_CODE_options_str  += '<option value="65080416">65080416</option>';
+            VILL_CODE_options_str  += '<option value="65080501">65080501</option>';
+            VILL_CODE_options_str  += '<option value="65080502">65080502</option>';
+            VILL_CODE_options_str  += '<option value="65080503">65080503</option>';
+            VILL_CODE_options_str  += '<option value="65080504">65080504</option>';
+            VILL_CODE_options_str  += '<option value="65080505">65080505</option>';
+            VILL_CODE_options_str  += '<option value="65080506">65080506</option>';
+            VILL_CODE_options_str  += '<option value="65080507">65080507</option>';
+            VILL_CODE_options_str  += '<option value="65080508">65080508</option>';
+            VILL_CODE_options_str  += '<option value="65080509">65080509</option>';
+            VILL_CODE_options_str  += '<option value="65080510">65080510</option>';
+            VILL_CODE_options_str  += '<option value="65080511">65080511</option>';
+            VILL_CODE_options_str  += '<option value="65080512">65080512</option>';
+            VILL_CODE_options_str  += '<option value="65080513">65080513</option>';
+            VILL_CODE_options_str  += '<option value="65080601">65080601</option>';
+            VILL_CODE_options_str  += '<option value="65080602">65080602</option>';
+            VILL_CODE_options_str  += '<option value="65080603">65080603</option>';
+            VILL_CODE_options_str  += '<option value="65080604">65080604</option>';
+            VILL_CODE_options_str  += '<option value="65080605">65080605</option>';
+            VILL_CODE_options_str  += '<option value="65080606">65080606</option>';
+            VILL_CODE_options_str  += '<option value="65080607">65080607</option>';
+            VILL_CODE_options_str  += '<option value="65080608">65080608</option>';
+            VILL_CODE_options_str  += '<option value="65080609">65080609</option>';
+            VILL_CODE_options_str  += '<option value="65080610">65080610</option>';
+            VILL_CODE_options_str  += '<option value="65080611">65080611</option>';
+            VILL_CODE_options_str  += '<option value="65080701">65080701</option>';
+            VILL_CODE_options_str  += '<option value="65080702">65080702</option>';
+            VILL_CODE_options_str  += '<option value="65080703">65080703</option>';
+            VILL_CODE_options_str  += '<option value="65080704">65080704</option>';
+            VILL_CODE_options_str  += '<option value="65080705">65080705</option>';
+            VILL_CODE_options_str  += '<option value="65080706">65080706</option>';
+            VILL_CODE_options_str  += '<option value="65080707">65080707</option>';
+            VILL_CODE_options_str  += '<option value="65080708">65080708</option>';
+            VILL_CODE_options_str  += '<option value="65080709">65080709</option>';
+            VILL_CODE_options_str  += '<option value="65080710">65080710</option>';
+            VILL_CODE_options_str  += '<option value="65080711">65080711</option>';
+            VILL_CODE_options_str  += '<option value="65080712">65080712</option>';
+            VILL_CODE_options_str  += '<option value="65080713">65080713</option>';
+            VILL_CODE_options_str  += '<option value="65080801">65080801</option>';
+            VILL_CODE_options_str  += '<option value="65080802">65080802</option>';
+            VILL_CODE_options_str  += '<option value="65080803">65080803</option>';
+            VILL_CODE_options_str  += '<option value="65080804">65080804</option>';
+            VILL_CODE_options_str  += '<option value="65080805">65080805</option>';
+            VILL_CODE_options_str  += '<option value="65080806">65080806</option>';
+            VILL_CODE_options_str  += '<option value="65080807">65080807</option>';
+            VILL_CODE_options_str  += '<option value="65080808">65080808</option>';
+            VILL_CODE_options_str  += '<option value="65080809">65080809</option>';
+            VILL_CODE_options_str  += '<option value="65080810">65080810</option>';
+            VILL_CODE_options_str  += '<option value="65080811">65080811</option>';
+            VILL_CODE_options_str  += '<option value="65080812">65080812</option>';
+            VILL_CODE_options_str  += '<option value="65080813">65080813</option>';
+            VILL_CODE_options_str  += '<option value="65080814">65080814</option>';
+            VILL_CODE_options_str  += '<option value="65080815">65080815</option>';
+            VILL_CODE_options_str  += '<option value="65080816">65080816</option>';
+            VILL_CODE_options_str  += '<option value="65080817">65080817</option>';
+            VILL_CODE_options_str  += '<option value="65080901">65080901</option>';
+            VILL_CODE_options_str  += '<option value="65080902">65080902</option>';
+            VILL_CODE_options_str  += '<option value="65080903">65080903</option>';
+            VILL_CODE_options_str  += '<option value="65080904">65080904</option>';
+            VILL_CODE_options_str  += '<option value="65080905">65080905</option>';
+            VILL_CODE_options_str  += '<option value="65080906">65080906</option>';
+            VILL_CODE_options_str  += '<option value="65080907">65080907</option>';
+            VILL_CODE_options_str  += '<option value="65080908">65080908</option>';
+            VILL_CODE_options_str  += '<option value="65080909">65080909</option>';
+            VILL_CODE_options_str  += '<option value="65080910">65080910</option>';
+            VILL_CODE_options_str  += '<option value="65080911">65080911</option>';
+            VILL_CODE_options_str  += '<option value="65081001">65081001</option>';
+            VILL_CODE_options_str  += '<option value="65081002">65081002</option>';
+            VILL_CODE_options_str  += '<option value="65081003">65081003</option>';
+            VILL_CODE_options_str  += '<option value="65081004">65081004</option>';
+            VILL_CODE_options_str  += '<option value="65081005">65081005</option>';
+            VILL_CODE_options_str  += '<option value="65081006">65081006</option>';
+            VILL_CODE_options_str  += '<option value="65081007">65081007</option>';
+            VILL_CODE_options_str  += '<option value="65081008">65081008</option>';
+            VILL_CODE_options_str  += '<option value="65081101">65081101</option>';
+            VILL_CODE_options_str  += '<option value="65081102">65081102</option>';
+            VILL_CODE_options_str  += '<option value="65081103">65081103</option>';
+            VILL_CODE_options_str  += '<option value="65081104">65081104</option>';
+            VILL_CODE_options_str  += '<option value="65081105">65081105</option>';
+            VILL_CODE_options_str  += '<option value="65081106">65081106</option>';
+            VILL_CODE_options_str  += '<option value="65081107">65081107</option>';
+            VILL_CODE_options_str  += '<option value="65081108">65081108</option>';
+            VILL_CODE_options_str  += '<option value="65081109">65081109</option>';
+            VILL_CODE_options_str  += '<option value="65081110">65081110</option>';
+            VILL_CODE_options_str  += '<option value="65090101">65090101</option>';
+            VILL_CODE_options_str  += '<option value="65090102">65090102</option>';
+            VILL_CODE_options_str  += '<option value="65090103">65090103</option>';
+            VILL_CODE_options_str  += '<option value="65090104">65090104</option>';
+            VILL_CODE_options_str  += '<option value="65090105">65090105</option>';
+            VILL_CODE_options_str  += '<option value="65090106">65090106</option>';
+            VILL_CODE_options_str  += '<option value="65090107">65090107</option>';
+            VILL_CODE_options_str  += '<option value="65090108">65090108</option>';
+            VILL_CODE_options_str  += '<option value="65090109">65090109</option>';
+            VILL_CODE_options_str  += '<option value="65090110">65090110</option>';
+            VILL_CODE_options_str  += '<option value="65090111">65090111</option>';
+            VILL_CODE_options_str  += '<option value="65090112">65090112</option>';
+            VILL_CODE_options_str  += '<option value="65090201">65090201</option>';
+            VILL_CODE_options_str  += '<option value="65090202">65090202</option>';
+            VILL_CODE_options_str  += '<option value="65090203">65090203</option>';
+            VILL_CODE_options_str  += '<option value="65090204">65090204</option>';
+            VILL_CODE_options_str  += '<option value="65090205">65090205</option>';
+            VILL_CODE_options_str  += '<option value="65090206">65090206</option>';
+            VILL_CODE_options_str  += '<option value="65090301">65090301</option>';
+            VILL_CODE_options_str  += '<option value="65090302">65090302</option>';
+            VILL_CODE_options_str  += '<option value="65090303">65090303</option>';
+            VILL_CODE_options_str  += '<option value="65090304">65090304</option>';
+            VILL_CODE_options_str  += '<option value="65090305">65090305</option>';
+            VILL_CODE_options_str  += '<option value="65090306">65090306</option>';
+            VILL_CODE_options_str  += '<option value="65090307">65090307</option>';
+            VILL_CODE_options_str  += '<option value="65090308">65090308</option>';
+            VILL_CODE_options_str  += '<option value="65090309">65090309</option>';
+            VILL_CODE_options_str  += '<option value="65090310">65090310</option>';
+            VILL_CODE_options_str  += '<option value="65090311">65090311</option>';
+            VILL_CODE_options_str  += '<option value="65090312">65090312</option>';
+            VILL_CODE_options_str  += '<option value="65090313">65090313</option>';
+            VILL_CODE_options_str  += '<option value="65090314">65090314</option>';
+            VILL_CODE_options_str  += '<option value="65090401">65090401</option>';
+            VILL_CODE_options_str  += '<option value="65090402">65090402</option>';
+            VILL_CODE_options_str  += '<option value="65090403">65090403</option>';
+            VILL_CODE_options_str  += '<option value="65090404">65090404</option>';
+            VILL_CODE_options_str  += '<option value="65090405">65090405</option>';
+            VILL_CODE_options_str  += '<option value="65090406">65090406</option>';
+            VILL_CODE_options_str  += '<option value="65090407">65090407</option>';
+            VILL_CODE_options_str  += '<option value="65090501">65090501</option>';
+            VILL_CODE_options_str  += '<option value="65090502">65090502</option>';
+            VILL_CODE_options_str  += '<option value="65090503">65090503</option>';
+            VILL_CODE_options_str  += '<option value="65090504">65090504</option>';
+            VILL_CODE_options_str  += '<option value="65090505">65090505</option>';
+            VILL_CODE_options_str  += '<option value="65090506">65090506</option>';
+            VILL_CODE_options_str  += '<option value="65090507">65090507</option>';
+            VILL_CODE_options_str  += '<option value="65090508">65090508</option>';
+            VILL_CODE_options_str  += '<option value="65090509">65090509</option>';
+            VILL_CODE_options_str  += '<option value="65090601">65090601</option>';
+            VILL_CODE_options_str  += '<option value="65090602">65090602</option>';
+            VILL_CODE_options_str  += '<option value="65090603">65090603</option>';
+            VILL_CODE_options_str  += '<option value="65090604">65090604</option>';
+            VILL_CODE_options_str  += '<option value="65090605">65090605</option>';
+            VILL_CODE_options_str  += '<option value="65090606">65090606</option>';
+            VILL_CODE_options_str  += '<option value="65090607">65090607</option>';
+            VILL_CODE_options_str  += '<option value="65090701">65090701</option>';
+            VILL_CODE_options_str  += '<option value="65090702">65090702</option>';
+            VILL_CODE_options_str  += '<option value="65090703">65090703</option>';
+            VILL_CODE_options_str  += '<option value="65090704">65090704</option>';
+            VILL_CODE_options_str  += '<option value="65090705">65090705</option>';
+            VILL_CODE_options_str  += '<option value="65090706">65090706</option>';
+            sel_VILL_CODE.innerHTML = VILL_CODE_options_str;
+            div_VILL_CODE.appendChild(sel_VILL_CODE);
+            var lab_VILL_CODE = document.createElement('div');
+            lab_VILL_CODE.innerHTML = 'VILL_CODE';
+            lab_VILL_CODE.className = 'filterlabel';
+            div_VILL_CODE.appendChild(lab_VILL_CODE);
+            var reset_VILL_CODE = document.createElement('div');
+            reset_VILL_CODE.innerHTML = 'clear filter';
+            reset_VILL_CODE.className = 'filterlabel';
+            reset_VILL_CODE.onclick = function() {
+                var options = document.getElementById("sel_VILL_CODE").options;
+                for (var i=0; i < options.length; i++) {
+                    options[i].selected = false;
+                }
+                filterFunc();
+            };
+            div_VILL_CODE.appendChild(reset_VILL_CODE);
+        resetLabels([layer_amphoe_2]);
+        map.on("zoomend", function(){
+            resetLabels([layer_amphoe_2]);
+        });
+        map.on("layeradd", function(){
+            resetLabels([layer_amphoe_2]);
+        });
+        map.on("layerremove", function(){
+            resetLabels([layer_amphoe_2]);
+        });
+        </script>
+
+
+<br>
+
+<h3><a href="../hobbies.html">Hobbies Me 😎🎶 </a></h3> 
+
+<h3><a href="../contact-me.html">Contact Me 😉📞 </a></h3> 
+
+<h3><a href="../index.html">HOME🏠</a></h3>
+
+    </body>
+</html>
